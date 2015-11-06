@@ -23,9 +23,9 @@
     define("BFURN_MYSQL_CONFIG",serialize(
 	array(
 	    "host" => MYSQL_HOST,
-	    "username" =>"adminv8eNEfY",
-	    "password" => "538SyfzmUVXz",
-	    "dbname" => "fqia",
+	    "username" =>"adminiLAdCuH",
+	    "password" => "YJlPcGk6ibVc",
+	    "dbname" => "qiaff",
 	    "transactional" => true
 	    )
     ));
