@@ -1,0 +1,14 @@
+/* 
+    Created on : Aug 1, 2015, 12:17:02 PM
+    Author     : Bayu Candra <bayucandra@gmail.com>
+*/
+.x-viewport > .x-body {
+    min-height: 100%;
+}
+.x-viewport, .x-viewport > .x-body {
+    border: 0 none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: static;
+}

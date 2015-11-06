@@ -1,0 +1,36 @@
+/*****BEGIN BUTTON INPUT******************/
+.def_btn_new{
+	background-image:url('../bimages/btn-icons/def_new.png');
+	background-repeat:no-repeat;
+}
+.def_btn_edit{
+	background-image:url('../bimages/btn-icons/def_edit.png');
+}
+.def_btn_filter{
+	background-image:url('../bimages/btn-icons/def_filter.png');
+}
+.def_btn_delete{
+	background-image:url('../bimages/btn-icons/def_delete.png');
+}
+.def_btn_pause{
+	background-image:url('../bimages/btn-icons/def_pause.png');
+}
+.def_btn_play{
+	background-image:url('../bimages/btn-icons/def_play.png');
+}
+.def_upload{
+	background-image:url('../bimages/btn-icons/def_upload.png');
+}
+.def_btn_save{
+    background-image:url('../bimages/btn-icons/def_save.png');
+}
+.upload-icon{
+    background-image:url('../bimages/btn-icons/def_upload.png');
+    width:16px;
+    height:16px;
+}
+.btn-special .x-btn-inner-default-small {
+  color: #000000;
+  font: 300 1rem/1.2rem helvetica,arial,verdana,sans-serif;
+}
+/*****END BUTTON INPUT********************/

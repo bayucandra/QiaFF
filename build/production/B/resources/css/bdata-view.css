@@ -1,0 +1,84 @@
+/*.bdata_view .x-panel-body{
+    background: white;
+    font: 1em Arial, Helvetica, sans-serif;
+}*/
+.bdata_view{
+    background: url('../bimages/wallpaper.jpg') no-repeat center center;
+    background-size: cover;
+    font-size: 1em;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.bdata_view .shortcut-icon{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-bottom: 0;
+    height:44px;
+}
+/*.bdata_view .thumb img{
+    width:120px;
+    height:auto;
+}*/
+/*.bdata_view .label div{
+    margin-left: 10px;
+    text-transform:capitalize;
+}*/
+
+.x-quirks .bdata_view .shortcut-icon {
+    padding-bottom: 3px;
+    height:40px;
+    overflow:hidden;
+}
+/*
+.bdata_view .thumb img{
+    height: 60px;
+    width: 80px;
+}*/
+.bdata_view .thumb-wrap{
+    float: left;
+    margin: 8px;
+    padding: 8px;
+    outline:0;
+    width:84px;
+    cursor : default;
+    border-radius: 3px;
+    text-align: center;
+	/*width:180px;*/
+}
+.bdata_view .thumb-wrap .shortcut-text {
+    display: block;
+    text-align: center;
+    margin-left:3px;
+    cursor : default;
+    color:#FFFFFF;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.95);
+    /*width: 86px;  for ie to ensure that the text is centered */
+}
+
+.bdata_view .x-item-over{
+    background: #efefef url('../bimages/dataview/over.gif') repeat-x left top;
+}
+
+.bdata_view .x-item-selected{
+    background: #eff5fb url('../bimages/dataview/selected.gif') no-repeat right bottom;
+    /*border:1px solid #99bbe8;*/
+    /*outline: 1px solid #99bbe8 !important:*/
+    /*outline-offset: -1px;*/
+}
+.bdata_view .x-view-item-focused {
+    outline: 1px solid #99bbe8 !important;
+    outline-offset: -1px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+.bdata_view .x-item-selected .thumb{
+    background:transparent;
+}
+
+.bdata_view .loading-indicator {
+    font-size:11px;
+    background-image:url('bimages/loading.gif');
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left:20px;
+    margin:10px;
+}
