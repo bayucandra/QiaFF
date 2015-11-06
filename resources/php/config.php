@@ -6,8 +6,8 @@
     define("APP_DETAIL",serialize(array(
 	"name"=>"FQIA",
 	"version"=>"0.2",
-	"title"=>"Furniture Quality integrated application | FQIA",
-	"description"=>"Furniture integrated system application",
+	"title"=>"QiaFF | Quality integrated application - for furniture company",
+	"description"=>"Integrated system application - for furniture company",
 	"company"=>"BQSoft",
 	"admin_contact"=>"bayucandra@gmail.com"
     )));

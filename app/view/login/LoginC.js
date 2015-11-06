@@ -49,6 +49,7 @@ Ext.define('B.view.login.LoginC',{
 		}
 	    },
 	    failure:function(response,opts){
+		mask.hide();
 		Ext.Msg.alert("Error","Error when loging in.");
 	    }
 	});
