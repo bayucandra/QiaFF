@@ -9,17 +9,28 @@
     
     $OBCrud=new BCrud($bfurn_db);
     switch($_REQUEST["section"]){
+	case "db_privilege":
+	    switch($_REQUEST["crud"]){
+		case "read":
+		    $qry_sel="SELECT * FROM `privilege`";
+		    echo json_encode($OBCrud->read($qry_sel));
+		    break;
+	    }
+	    break;
 	case "user":
 	    switch($_REQUEST["crud"]){
 		case "create":
-		    $username=strtolower($_REQUEST["username"]);
-		    $password=$_REQUEST["password"];
+		    $username=$bfurn_db->quote( strtolower($_REQUEST["username"]) );
+		    $password=$bfurn_db->quote( 
+			    get_enc_password($_REQUEST["password"], ENC_PASSWORD)
+			);
 		    $iduser_group=$_REQUEST["iduser_group"];
-		    $fullname=$_REQUEST["fullname"];
-		    $email=!empty($_REQUEST["email"])?$_REQUEST["email"]:$username.'@'.$_SERVER["HTTP_HOST"];
+		    $fullname=$bfurn_db->quote($_REQUEST["fullname"]);
+		    $email=$bfurn_db->quote(
+			    !empty($_REQUEST["email"])?$_REQUEST["email"]:strtolower($_REQUEST["username"]).'@'.$_SERVER["HTTP_HOST"]
+			);
 		    $qry_ins="INSERT INTO `user`(`username`,`password`,iduser_group,email,fullname)
-			VALUES({$bfurn_db->quote($username)},{$bfurn_db->quote( get_enc_password($password, ENC_PASSWORD))},$iduser_group,
-			    {$bfurn_db->quote($email)},{$bfurn_db->quote($fullname)})";
+			VALUES($username,$password,$iduser_group,$email,$fullname)";
 		    echo json_encode($OBCrud->create($qry_ins));
 		    break;
 		case "read":
@@ -30,23 +41,60 @@
 		    echo json_encode( $OBCrud->read($qry_sel) );
 		    break;
 		case "update":
-		    $json_request = file_get_contents('php://input');
-		    $json = json_decode($json_request);
-		    $set_qry="SET";
-		    if(isset($json->username)){
-			$set_qry.=" `username`='{$json->username}'";
-		    }
-		    if(isset($json->groupname)){
-			if($set_qry!=="SET"){
-			    $set_qry.=",";
+		    $iduser=$_REQUEST["iduser"]; $username=$bfurn_db->quote(strtolower($_REQUEST["username"]));
+		    $password=empty($_REQUEST["password"])?
+			'':
+			$bfurn_db->quote( 
+				get_enc_password( $_REQUEST["password"], ENC_PASSWORD) 
+			);
+		    $iduser_group_old=$_REQUEST["iduser_group_old"];
+		    $iduser_group=$_REQUEST["iduser_group"];
+		    $fullname=$bfurn_db->quote($_REQUEST["fullname"]);
+		    $email=$bfurn_db->quote(
+			    !empty($_REQUEST["email"])?$_REQUEST["email"]:strtolower($_REQUEST["username"]).'@'.$_SERVER["HTTP_HOST"]
+			);
+		    //BEGIN DELETE privilege_user_revoke FIRST===================================
+		    if($iduser_group_old!=$iduser_group){
+			$qry_del="DELETE FROM privilege_user_revoke WHERE iduser=$iduser";
+			$ret_del=$OBCrud->destroy($qry_del);
+			if(!$ret_del["success"]){
+			    echo json_encode($ret_del);
+			    break;
 			}
-			$set_qry.=" `iduser_group`=(SELECT iduser_group FROM user_group WHERE `name`='{$json->groupname}')";
+		    }
+		    //END DELETE privilege_user_revoke FIRST*****************************
+		    $set_qry="SET `username`=$username, `iduser_group`=$iduser_group, `fullname`=$fullname, email=$email";
+		    if(!empty($password)){
+			$set_qry.=", `password`=$password";
 		    }
 		    $qry_upd="UPDATE `user` $set_qry
-			WHERE `iduser`='{$json->iduser}' LIMIT 1";
+			WHERE `iduser`=$iduser LIMIT 1";
 		    echo json_encode( $OBCrud->update($qry_upd) );
 		    break;
 		case "destroy":
+		    $iduser=$_REQUEST["iduser"];
+		    $ret_arr=array("success"=>true,"error_msg"=>"");
+		    if(!empty($iduser)){
+			//BEGIN DELETING privilege_user============
+			$qry_del_pu="DELETE FROM privilege_user WHERE iduser=$iduser";
+			$res_del_pu=$OBCrud->destroy($qry_del_pu);
+			if($res_del_pu["success"]===true){
+			    $qry_del_pur="DELETE FROM privilege_user_revoke WHERE iduser=$iduser";
+			    $res_del_pur=$OBCrud->destroy($qry_del_pur);
+			    if($res_del_pur["success"]===true){
+				$qry_del_u="DELETE FROM `user` WHERE iduser=$iduser";
+				$res_del_u=$OBCrud->destroy($qry_del_u);
+				if($res_del_u["success"]!==true){
+				    $ret_arr["success"]=false; $ret_arr["error_msg"].=$res_del_u["error_msg"];
+				}
+			    }else{
+				$ret_arr["success"]=false; $ret_arr["error_msg"].=$res_del_pur["error_msg"];
+			    }
+			}else{
+			    $ret_arr["success"]=false; $ret_arr["error_msg"].=$res_del_pu["error_msg"];
+			}
+		    }
+		    echo json_encode($ret_arr);
 		    break;
 	    }
 	    break;
@@ -107,9 +155,17 @@
 	    break;
 	case "user_priv":
 	    switch($_REQUEST["crud"]){
+		case "create":
+		    if( isset($_REQUEST["iduser"]) && isset($_REQUEST["privilege"]) ){
+			$iduser=$_REQUEST["iduser"];
+			$privilege=$_REQUEST["privilege"];
+			$qry_ins="INSERT INTO privilege_user(`iduser`,`privilege`) VALUES ($iduser, '$privilege')";
+			echo json_encode($OBCrud->create($qry_ins));
+		    }
+		    break;
 		case "read":
 		    if(isset($_REQUEST["iduser"])){
-			$qry_sel="SELECT privilege AS privilege_user
+			$qry_sel="SELECT iduser, privilege AS privilege_user
 			    FROM privilege_user
 			    WHERE iduser={$_REQUEST['iduser']}";
 			echo json_encode($OBCrud->read($qry_sel));

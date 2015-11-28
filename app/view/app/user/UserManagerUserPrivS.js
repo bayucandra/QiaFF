@@ -7,7 +7,7 @@ Ext.define('B.view.app.user.UserManagerUserPrivS',{
     extend:'Ext.data.Store',
     storeId:'UserManagerUserPrivS',
     requires:['B.view.app.user.UserManagerUserPrivM'],
-    model:'B.view.app.user.UserManagerUserM',
+    model:'B.view.app.user.UserManagerUserPrivM',
     autoLoad:false,
     proxy:{
 	type:'ajax',

@@ -8,8 +8,10 @@ Ext.define('B.view.app.user.UserManagerUserPrivW',{
     id:'UserManagerUserPrivW',
     width:300,
     requires:[
-	'Ext.form.*'
+	'Ext.form.*',
+	'B.view.app.user.UserManagerUserPrivWC'
     ],
+    controller:'UserManagerUserPrivWC',
     items:[
 	{
 	    xtype:'form',
@@ -18,12 +20,16 @@ Ext.define('B.view.app.user.UserManagerUserPrivW',{
 	    flex:1,
 	    items:[
 		{xtype:'hidden', name:'section', value:'user_priv'},
-		{xtype:'hidden', name:'crud', allowBlank:false},
+		{xtype:'hidden', name:'crud', value:'create'},
 		{xtype:'hidden', name:'iduser', allowBlank:false},
-		{xtype:'combobox', fieldLabel:'Privilege', name:'privilege', allowBlank:false, store:'PrivilegeSS', forceSelection:true,
+		{xtype:'combobox', fieldLabel:'Privilege', name:'privilege', allowBlank:false, store:'PrivilegeS', forceSelection:true,
 		    displayField:'privilege'
 		}
 	    ]
 	}
-    ]
+    ],
+    buttons:[{text:'Submit', handler:'onSubmit'},{text:'Cancel'}],
+    listeners:{
+	afterrender:'onAfterrender'
+    }
 });

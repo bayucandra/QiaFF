@@ -17,7 +17,11 @@ Ext.define('B.Application', {
 	'B.view.app.config.ConfigApp',
 	'B.view.app.product.ProductApp',
 	'B.view.app.costing.CostingApp',
-	'B.view.app.user.UserManagerApp'
+	'B.view.app.user.UserManagerApp',
+	'Ext.plugin.Viewport',
+	'Ext.grid.*',
+	'Ext.layout.container.Center',
+	'Ext.layout.container.Border'
     ],
     
     controllers: [

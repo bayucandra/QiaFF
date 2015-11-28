@@ -9,9 +9,7 @@ Ext.define('B.view.app.user.UserManagerApp',{
     requires:[
 	'B.view.app.user.UserManagerAppC',
 	'B.view.app.user.UserManagerUserW',
-	'B.view.app.user.UserManagerUserPrivW',
-	'Ext.layout.container.Border',
-	'Ext.grid.column.Action'
+	'B.view.app.user.UserManagerUserPrivW'
     ],
     width:'80%', height:'80%',
     last_size:[],
@@ -166,7 +164,15 @@ Ext.define('B.view.app.user.UserManagerApp',{
 		    ],
 		    columns:{
 			defaults:{dragabel:false,hideable:false,sortable:false},
-			items:[{xtype:'rownumberer'},{text:'User Privilege',dataIndex:'privilege_user',flex:1}]
+			items:[
+			    {xtype:'rownumberer'},
+			    {text:'User Privilege',dataIndex:'privilege_user',width:300},
+			    {xtype:'actioncolumn', width:60, sortable:false, menuDisabled:true, resizeable:false,
+				items:[
+				    {iconCls:'def_btn_delete', tooltip:'Delete User', handler:'onUserPrivDestroy'}
+				]
+			    }
+			]
 		    }
 		}
 	    ]
@@ -174,8 +180,14 @@ Ext.define('B.view.app.user.UserManagerApp',{
     ],
     listeners:{
 	afterrender:function(th,opt){
-	    Ext.getStore('UserManagerUserS').load();
+	    Ext.getStore('UserManagerUserS').load({
+		scope:this,
+		callback: function(rec, operation, success){
+		    th.down('grid[itemId=grid-user]').getSelectionModel().select(0);
+		}
+	    });
 	    Ext.getStore('UserGroupS').load();
+
 	}
     }
 });

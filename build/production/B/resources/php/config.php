@@ -6,8 +6,8 @@
     define("APP_DETAIL",serialize(array(
 	"name"=>"FQIA",
 	"version"=>"0.2",
-	"title"=>"Furniture Quality integrated application | FQIA",
-	"description"=>"Furniture integrated system application",
+	"title"=>"QiaFF | Quality integrated application - for furniture company",
+	"description"=>"Integrated system application - for furniture company",
 	"company"=>"BQSoft",
 	"admin_contact"=>"bayucandra@gmail.com"
     )));
@@ -23,9 +23,9 @@
     define("BFURN_MYSQL_CONFIG",serialize(
 	array(
 	    "host" => MYSQL_HOST,
-	    "username" =>"adminv8eNEfY",
-	    "password" => "538SyfzmUVXz",
-	    "dbname" => "fqia",
+	    "username" =>"adminEv4eDyN",
+	    "password" => "biuI33CaMFIx",
+	    "dbname" => "qiaff",
 	    "transactional" => true
 	    )
     ));

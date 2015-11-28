@@ -30,6 +30,11 @@
 				return false;
 		}
 	}
+	function b_db_is_transactional(){
+	    $db_config= unserialize(BFURN_MYSQL_CONFIG);
+	    $is_transactional = $db_config["transactional"]?true:false;
+	    return $is_transactional;
+	}
 	function urlGetReinsert($p_url_str,$p_str_get_var_name,$p_str_get_var_val){
 		$url_reinserted="";
 		$arr_each_get=explode('&',$p_url_str);

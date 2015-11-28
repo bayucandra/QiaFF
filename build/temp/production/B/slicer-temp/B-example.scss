@@ -1,4 +1,4 @@
-$image-search-path: '/media/sda3/Projects/Web/fqia/build/production/B/resources';
+$image-search-path: '/media/sda3/Projects/Web/qia-ff/build/production/B/resources';
 $theme-name:  'ext-theme-crisp' !default;
 $include-b-application: true;
 $include-b-controller-root: true;
@@ -20,6 +20,8 @@ $include-b-view-app-user-usermanagergroupprivs: true;
 $include-b-view-app-user-usermanageruserm: true;
 $include-b-view-app-user-usermanageruserprivm: true;
 $include-b-view-app-user-usermanageruserprivs: true;
+$include-b-view-app-user-usermanageruserprivw: true;
+$include-b-view-app-user-usermanageruserprivwc: true;
 $include-b-view-app-user-usermanagerusers: true;
 $include-b-view-app-user-usermanageruserw: true;
 $include-b-view-app-user-usermanageruserwc: true;

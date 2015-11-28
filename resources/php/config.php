@@ -23,8 +23,8 @@
     define("BFURN_MYSQL_CONFIG",serialize(
 	array(
 	    "host" => MYSQL_HOST,
-	    "username" =>"adminiLAdCuH",
-	    "password" => "YJlPcGk6ibVc",
+	    "username" =>"adminEv4eDyN",
+	    "password" => "biuI33CaMFIx",
 	    "dbname" => "qiaff",
 	    "transactional" => true
 	    )

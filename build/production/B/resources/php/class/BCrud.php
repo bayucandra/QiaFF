@@ -104,7 +104,7 @@ class BCrud{
 	$ret_arr=array("success"=>true,"error_msg"=>"");
 	try{
 	    $res=$this->db_link->exec($p_qry);
-	    if($res!=1){
+	    if($res===false){
 		$ret_arr["success"]=false;
 		$error_info=$this->db_link->errorInfo();
 		$ret_arr["error_msg"].=$error_info[2];

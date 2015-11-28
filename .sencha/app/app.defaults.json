@@ -2,7 +2,7 @@
     /**
      * The relative path to the appliaction's markup file (html, jsp, asp, etc.)
      */
-    "indexHtmlPath": "index.html",
+    "indexHtmlPath": "index.php",
 
     /**
      * List of all JavaScript assets in the right execution order.

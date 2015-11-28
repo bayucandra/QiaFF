@@ -5,5 +5,5 @@
 */
 Ext.define('B.view.app.user.UserManagerUserPrivM',{
     extend:'Ext.data.Model',
-    fields:[{name:'privilege_user'}]
+    fields:[{name:'iduser'},{name:'privilege_user'}]
 });

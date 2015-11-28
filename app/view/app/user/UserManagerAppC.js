@@ -34,31 +34,33 @@ Ext.define('B.view.app.user.UserManagerAppC',{
     },
     onUserDestroy:function(th,rowIdx,colIdx){
 	var rec=th.getStore().getAt(rowIdx);
-	var mask=new Ext.LoadMask({
-	    target:th,
-	    msg:'Deleting selected user record...'
-	});
-	mask.show();
-	Ext.Ajax.request({
-	    url:'resources/php/crud/user_manager_crud.php',
-	    params:{
-		section:'user',
-		crud:'destroy',
-		iduser:rec.get('iduser')
-	    },
-	    success:function(response, opts){
-		mask.hide();
-		var ret_obj=Ext.decode(response.responseText);
-		if(ret_obj.success){
-		    Ext.getStore('UserManagerUserS').reload();
-		}else{
-		    Ext.Msg.show({
-			title:'Error destroy data record',
-			msg:'There was error when trying to destroy selected data record: '+ret_obj.error_msg
+	Ext.Msg.confirm("Confirm?","Are you sure to delete User name: "+rec.get('username')+'?',
+	    function(answer){
+		if(answer==='yes'){
+		    th.up('grid').setLoading('Deleting selected user');
+		    Ext.Ajax.request({
+			url:'resources/php/crud/user_manager_crud.php',
+			params:{
+			    section:'user',
+			    crud:'destroy',
+			    iduser:rec.get('iduser')
+			},
+			success:function(response, opts){
+			    th.up('grid').setLoading(false);
+			    var ret_obj=Ext.decode(response.responseText);
+			    if(ret_obj.success){
+				Ext.getStore('UserManagerUserS').reload();
+			    }else{
+				Ext.Msg.show({
+				    title:'Error destroy data record',
+				    msg:'There was error when trying to destroy selected data record: '+ret_obj.error_msg
+				});
+			    }
+			}
 		    });
 		}
 	    }
-	});
+	);
     },
     createUserInputWindow:function(){
 	var win_user_input=Ext.getCmp('UserManagerUserW');
@@ -185,9 +187,71 @@ Ext.define('B.view.app.user.UserManagerAppC',{
     onUserPrivCreate:function(btn){
 	var win_user_input=this.createUserPrivWindow();
 	win_user_input.center();
-	win_user_input.show();
-	var zindexmanager=win_user_input.zIndexManager;
-	zindexmanager.bringToFront('UserManagerUserPrivW');
+	var grid_user=Ext.getCmp('UserManagerApp').down('grid[itemId=grid-user]');
+	var selected_user=grid_user.getSelectionModel().getSelection()[0];
+	if(selected_user.get('groupname')==='root'){
+	    Ext.Msg.show({
+		title:'Useless action',
+		msg:'The group of username: '+selected_user.get('username')+' is "root". "root" group already has all privilege.',
+		buttons:Ext.Msg.OK,
+		icon:Ext.Msg.ERROR
+	    });
+	    return;
+	}
+	if(grid_user.getSelectionModel().hasSelection()){
+	    win_user_input.setTitle('Add Privilege for username: '+selected_user.get('username'));
+	    win_user_input.show();
+	    var zindexmanager=win_user_input.zIndexManager;
+	    zindexmanager.bringToFront('UserManagerUserPrivW');
+	}else{
+	    Ext.Msg.show({
+		title:'Error',
+		msg:'Please select user record to Add/Edit user privilege',
+		buttons:Ext.Msg.OK,
+		icon:Ext.Msg.ERROR
+	    });
+	    return;
+	}
+    },
+    onUserPrivDestroy:function(th, rowIdx, colIdx){
+	var rec=th.getStore().getAt(rowIdx);
+	Ext.Msg.confirm("Confirm?","Are you sure to delete privilege: "+rec.get('privilege_user')+'?',
+	    function(answer){
+		if(answer==='yes'){
+		    th.up('grid').setLoading('Deleting selected user privilege');
+		    Ext.Ajax.request({
+			url:'resources/php/crud/user_manager_crud.php',
+			params:{
+			    section:'user_priv',
+			    crud:'destroy',
+			    iduser:rec.get('iduser'),
+			    privilege:rec.get('privilege_user')
+			},
+			success:function(response, opts){
+			    th.up('grid').setLoading(false);
+			    var ret_obj=Ext.decode(response.responseText);
+			    if(ret_obj.success){
+				Ext.getStore('UserManagerUserPrivS').reload();
+			    }else{
+				Ext.Msg.show({
+				    title:'Error destroy data record',
+				    msg:'There was error when trying to destroy selected data record: '+ret_obj.error_msg
+				});
+			    }
+			},
+			failure:function(response, opts){
+			    th.up('grid').setLoading(false);
+			    Ext.Msg.show({
+				title:'Error code: '+response.status,
+				msg:'Server error: '+response.statusText,
+				buttons:Ext.Msg.OK,
+				icon:Ext.Msg.ERROR
+			    });
+			}
+		    });
+		}
+	    }
+	);
     },
     createUserPrivWindow:function(){
 	var win_user_input=Ext.getCmp('UserManagerUserPrivW');

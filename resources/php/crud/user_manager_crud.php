@@ -155,12 +155,29 @@
 	    break;
 	case "user_priv":
 	    switch($_REQUEST["crud"]){
+		case "create":
+		    if( isset($_REQUEST["iduser"]) && isset($_REQUEST["privilege"]) ){
+			$iduser=$_REQUEST["iduser"];
+			$privilege=$_REQUEST["privilege"];
+			$qry_ins="INSERT INTO privilege_user(`iduser`,`privilege`) VALUES ($iduser, '$privilege')";
+			echo json_encode($OBCrud->create($qry_ins));
+		    }
+		    break;
 		case "read":
 		    if(isset($_REQUEST["iduser"])){
-			$qry_sel="SELECT privilege AS privilege_user
+			$qry_sel="SELECT iduser, privilege AS privilege_user
 			    FROM privilege_user
 			    WHERE iduser={$_REQUEST['iduser']}";
 			echo json_encode($OBCrud->read($qry_sel));
+		    }
+		    break;
+		case "destroy":
+		    if(isset($_REQUEST["iduser"]) && isset($_REQUEST["privilege"])){
+			$qry_del="DELETE FROM privilege_user
+			    WHERE iduser={$_REQUEST['iduser']}
+				AND `privilege`='{$_REQUEST['privilege']}'
+			    LIMIT 1";
+			echo json_encode($OBCrud->destroy($qry_del));
 		    }
 		    break;
 	    }

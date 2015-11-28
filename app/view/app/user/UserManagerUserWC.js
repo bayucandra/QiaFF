@@ -16,7 +16,7 @@ Ext.define('B.view.app.user.UserManagerUserWC',{
 	    form.findField('password_repeat').markInvalid('Password repeat doesn\'t match.');
 	    form.findField('password_repeat').setValidation('Password repeat doesn\'t match.');
 	}
-	//END CUSTOM VALIDATION================
+	//END CUSTOM VALIDATION**************************
 	if(form.isValid()){
 	    form.submit({
 		url:'resources/php/crud/user_manager_crud.php',
