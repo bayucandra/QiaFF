@@ -1,7 +1,7 @@
 <?php
 //	session_start();
 	require_once('config.php');
-	bsession_life(ROOT_PATH_SYSTEM);
+	bsession_life(SESSION_PATH);
 	$session="";
 	if(isset($_SESSION[SESSION_NAME])){
 	    $session=$_SESSION[SESSION_NAME];

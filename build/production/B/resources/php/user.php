@@ -1,6 +1,6 @@
 <?php
     require_once('config.php');
-    bsession_life(ROOT_PATH_SYSTEM);
+    bsession_life(SESSION_PATH);
     require_once('db.php');
     require_once('class/BLogin.php');
     $OBLogin=new BLogin($bfurn_db);

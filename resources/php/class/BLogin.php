@@ -32,7 +32,7 @@ class BLogin{
 			$json_result["iduser"]=$fa_sel["iduser"];
 			$json_result["username"]=$fa_sel["username"];
 			$json_result["fullname"]=$fa_sel["fullname"];
-			bsession_life(ROOT_PATH_SYSTEM);
+			bsession_life(SESSION_PATH);
 			$_SESSION[SESSION_NAME]["iduser"] = $fa_sel["iduser"];
 			$_SESSION[SESSION_NAME]["username"] = $fa_sel["username"];
 			$_SESSION[SESSION_NAME]["fullname"] = $fa_sel["fullname"];

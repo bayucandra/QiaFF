@@ -13,6 +13,7 @@
     )));
 	
     define("ROOT_PATH_SYSTEM", dirname(__FILE__));
+    define("SESSION_PATH",ROOT_PATH_SYSTEM."/../..");
     define("OPENSHIFT_DB_HOST",getenv('OPENSHIFT_MYSQL_DB_HOST'));
     if(getenv('OPENSHIFT_MYSQL_DB_HOST')!==false){
 	define("MYSQL_HOST",getenv('OPENSHIFT_MYSQL_DB_HOST'));

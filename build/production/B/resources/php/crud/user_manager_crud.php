@@ -1,6 +1,6 @@
 <?php
     require_once('../config.php');
-    bsession_life(ROOT_PATH_SYSTEM);
+    bsession_life(SESSION_PATH);
     require_once('../db.php');
     require_once('../class/BLogin.php');
     require_once('../class/BCrud.php');
@@ -169,6 +169,15 @@
 			    FROM privilege_user
 			    WHERE iduser={$_REQUEST['iduser']}";
 			echo json_encode($OBCrud->read($qry_sel));
+		    }
+		    break;
+		case "destroy":
+		    if(isset($_REQUEST["iduser"]) && isset($_REQUEST["privilege"])){
+			$qry_del="DELETE FROM privilege_user
+			    WHERE iduser={$_REQUEST['iduser']}
+				AND `privilege`='{$_REQUEST['privilege']}'
+			    LIMIT 1";
+			echo json_encode($OBCrud->destroy($qry_del));
 		    }
 		    break;
 	    }
